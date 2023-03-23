@@ -1,4 +1,4 @@
-//axios import buraya gelecek
+import axios from 'axios';
 
 var benimIP;
 
@@ -25,7 +25,7 @@ async function ipAdresimiAl(){
 /*
 	ADIM 1: axios kullanarak, aşağıdaki URL'ye GET sorgusu atacağız
     (tag içindeki yere kendi ipnizi yazarak URL'yi oluşturun):
-    https://apis.ergineer.com/ipgeoapi/<ipniz>
+    https://apis.ergineer.com/ipgeoapi/176.55.63.6
 	
 	NOT: Bilgisayarın IP adresini öğrenmek için: https://apis.ergineer.com/ipadresim 
 	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
@@ -69,4 +69,74 @@ async function ipAdresimiAl(){
 
 
 
-//kodlar buraya gelecek
+
+axios.get('https://apis.ergineer.com/ipgeoapi/176.55.63.6')
+.then(response => {
+	console.log(response.data);
+})
+.catch(error => {
+	console.log(error);
+});
+
+
+function createCard(data) {
+	const carDiv = document.createElement('div');
+	const img = document.createElement('img');
+	const cardInfoDiv = document.createElement('div');
+	const ip = document.createElement('h3');
+	const ulke = document.createElement('p');
+	const enlemBoylam = document.createElement('p');
+	const sehir = document.createElement('p');
+	const saatDilimi = document.createElement('p');
+	const paraBirimi = document.createElement('p');
+	const isp = document.createElement('p');
+
+cardInfoDiv.className = 'card';
+img.className = 'bayrak';
+cardInfoDiv.classNanem = 'card-info';
+ip.className = 'ip';
+ulke.className = 'ulke';i
+
+img.src = data.country-flag;
+ip.textContent = data.ip;
+ulke.textContent = `Ülke: ${data.country_code}`;
+enlemBoylam.textContent = `Enlem: ${data.latitude} Boylam: ${data.longitude}`;
+sehir.textContent = `Şehir: ${data.city}`;
+saatDilimi.textContent = `Saat Dilimi: $[data.timezone]`;
+paraBirimi.textContent = `Para Birimi: ${data.currency}`;
+isp.textContent = `ISP: ${data.isp}`;
+
+cardDiv.appendChild(img);
+cardDiv.appendChild(cardInfoDiv);
+cardInfoDiv.appendChild(ip);
+cardInfoDiv.appendChild(ulke);
+cardInfoDiv.appendChild(enlemBoylam);
+cardInfoDiv.appendChild(sehir);
+cardInfoDiv.appendChild(saatDilimi);
+cardInfoDiv.appendChild(paraBirimi);
+cardInfoDiv.appendChild(isp);
+
+return cardDiv;
+}
+
+const cardsDiv = document.querySelector('.cards');
+axios.get('https://apis.erginer.com/ipgeoapip/176.55.63.6')
+.then(response => {
+	const data = response.data;
+	const card = createCard(data);
+	cardsDiv.appendChild(card);
+})
+.catch(error => {
+	console.log(error);
+});
+
+async function ipAdresimiAl () {
+	try {
+		const response = await fetch('https://apis.ergineer.com/ipadresim');
+		const data = await response.text();
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
